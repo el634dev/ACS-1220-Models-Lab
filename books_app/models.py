@@ -12,14 +12,14 @@ class Audience(enum.Enum):
 # --------------------
 class User(db.Model):
     """User Model"""
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
-    favorite_books = db.relationship('Book', back_populates='user')
+    favorite_books = db.relationship('Book', secondary='favorite_book_table', backref='users')
 
 # ---------------------
 class Book(db.Model):
     """Book model."""
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey('book.id'), primary_key=True)
     title = db.Column(db.String(80), nullable=False)
     publish_date = db.Column(db.Date)
 
@@ -68,4 +68,10 @@ class Genre(db.Model):
 book_genre_table = db.Table('book_genre',
     db.Column('book_id', db.Integer, db.ForeignKey('book.id')),
     db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'))
+)
+
+
+favorite_book_table = db.Table('favorite_book_table',
+    db.Column('book_id', db.Integer, db.ForeignKey('book.id')),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
 )
