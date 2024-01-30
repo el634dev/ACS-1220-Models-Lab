@@ -9,6 +9,7 @@ class Audience(enum.Enum):
     ADULT = 3
     ALL = 4
 
+# ---------------------
 class Book(db.Model):
     """Book model."""
     id = db.Column(db.Integer, primary_key=True)
@@ -18,7 +19,7 @@ class Book(db.Model):
     # The author - Who wrote it?
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
     author = db.relationship('Author', back_populates='books')
-    
+
     # The audience - Who is this book written for?
     audience = db.Column(db.Enum(Audience), default=Audience.ALL)
 
@@ -31,6 +32,7 @@ class Book(db.Model):
     def __repr__(self):
         return f'<Book: {self.title}>'
 
+# -------------------------
 class Author(db.Model):
     """Author model."""
     id = db.Column(db.Integer, primary_key=True)
@@ -43,6 +45,7 @@ class Author(db.Model):
     def __repr__(self):
         return f'<Author: {self.name}>'
 
+# ---------------------------
 class Genre(db.Model):
     """Genre model."""
     id = db.Column(db.Integer, primary_key=True)
