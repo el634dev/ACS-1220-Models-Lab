@@ -14,7 +14,10 @@ class User(db.Model):
     """User Model"""
     id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
-    favorite_books = db.relationship('Book', secondary='favorite_book_table', backref='users', uselist=False)
+    favorite_books = db.relationship('Book', secondary='favorite_book_table', backref='user', uselist=False)
+
+    # def __repr__(self):
+    #     return f'{self.username}'
 
 # ---------------------
 class Book(db.Model):
