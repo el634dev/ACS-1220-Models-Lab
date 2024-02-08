@@ -1,22 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <p>Welcome to {{ user.username }}'s profile.</p>
 
-<p>
-Welcome to {{ username }}'s profile.
-</p>
-
-<!-- TODO: Display the user's actual favorites here -->
-
-<p>
-    {{ username }}'s favorite books are:
-
-    <ul>
-        <li>Your</li>
-        <li>Favorites</li>
-        <li>Go</li>
-        <li>Here</li>
-    </ul>
-</p>
-
+    {% if user.favorite_books != None %}
+        <p>
+            {{ user.username }}'s favorite books are:
+        </p>
+        <!-- Display the user's actual favorites here -->
+        <ul>
+            {% for book in user.favorite_books %}
+            <li>
+                {{ book.title }} by {{ book.author }}
+            </li>
+            {% endfor %}
+        </ul>
+        <p>No favorite books listed yet.</p>
+    {% endif %}
 {% endblock %}
